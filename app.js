@@ -377,11 +377,11 @@ const contractABI = [
 	}
 ];
 
-const contractAddress = '0x803594E4B0B976159b8cfb12D22430dA97E5Dcc3';
+const contractAddress = '0x565e08b65D0F84F563Cd416A55CAE8C8613bB017';
 
 const estateAgencyContract = new web3.eth.Contract(contractABI, contractAddress);
 
-estateAgencyContract.methods.properties('0xbc165d0a44200BdD89963839562002980c305b76').call((error, result) => {
+estateAgencyContract.methods.properties('0x09407Ad85c6EF8192a046E0bFe6895D268500457').call((error, result) => {
 	if (error) {
 		console.error('Ошибка при вызове метода контракта:', error);
 	} else {
@@ -399,7 +399,7 @@ confirmButton.addEventListener('click', async (event) => {
 		const usefulArea = document.getElementById('usefulArea').value;
 		
 		await estateAgencyContract.methods.registerProperty(propertyAddress, totalArea, usefulArea).send({
-			from: '0xa333716dc960B0286584fB43B38888fc2a6EC164',
+			from: '0x09407Ad85c6EF8192a046E0bFe6895D268500457',
 			gas: 3000000
 		});
 		
@@ -408,3 +408,27 @@ confirmButton.addEventListener('click', async (event) => {
 		console.error('Ошибка при регистрации недвижимости:', error);
 	}
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+	const offerRentForm = document.getElementById('offerRentForm');
+	
+	offerRentForm.addEventListener('submit', async function(event) {
+		event.preventDefault();
+		
+		try {
+			const propertyAddress = document.getElementById('propertyAddress').value;
+			const rentAmount = document.getElementById('rentAmount').value;
+			const rentDuration = document.getElementById('rentDuration').value;
+			
+			await estateAgencyContract.methods.offerRent(propertyAddress, rentAmount, rentDuration).send({
+				from: '0x09407Ad85c6EF8192a046E0bFe6895D268500457',
+				gas: 3000000
+			});
+			
+			console.log('Предложение аренды успешно отправлено!');
+		} catch (error) {
+			console.error('Ошибка при отправке предложения аренды:', error);
+		}
+	});
+});
+
