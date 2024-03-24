@@ -409,26 +409,24 @@ confirmButton.addEventListener('click', async (event) => {
 	}
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-	const offerRentForm = document.getElementById('offerRentForm');
+const offerButton = document.getElementById('offerButton');
+offerButton.addEventListener('click', async (event) => {
+	event.preventDefault();
 	
-	offerRentForm.addEventListener('submit', async function(event) {
-		event.preventDefault();
+	try {
+		const propertyAddress = document.getElementById('propertyAddress').value;
+		const rentAmount = document.getElementById('rentAmount').value;
+		const rentDuration = document.getElementById('rentDuration').value;
 		
-		try {
-			const propertyAddress = document.getElementById('propertyAddress').value;
-			const rentAmount = document.getElementById('rentAmount').value;
-			const rentDuration = document.getElementById('rentDuration').value;
-			
-			await estateAgencyContract.methods.offerRent(propertyAddress, rentAmount, rentDuration).send({
-				from: '0x09407Ad85c6EF8192a046E0bFe6895D268500457',
-				gas: 3000000
-			});
-			
-			console.log('Предложение аренды успешно отправлено!');
-		} catch (error) {
-			console.error('Ошибка при отправке предложения аренды:', error);
-		}
-	});
+		await estateAgencyContract.methods.offerRent(propertyAddress, rentAmount, rentDuration).send({
+			from: '0x09407Ad85c6EF8192a046E0bFe6895D268500457',
+			gas: 3000000
+		});
+		
+		console.log('Предложение аренды успешно отправлено!');
+	} catch (error) {
+		console.error('Ошибка при отправке предложения аренды:', error);
+	}
 });
+
 
