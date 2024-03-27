@@ -17,5 +17,26 @@
     </form>
 </div>
 <div id="result"></div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const confirmRentForm = document.getElementById('confirmRentForm');
+        confirmRentForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            try {
+                const propertyAddress = document.getElementById('propertyAddress').value;
+
+                await contract.methods.confirmRent(propertyAddress).send({
+                    from: '0x046f284908412C34e92AbB599A78B5299273C168',
+                    gas: 3000000
+                });
+
+                console.log('Аренда успешно подтверждена!');
+            } catch (error) {
+                console.error('Ошибка при подтверждении аренды:', error);
+            }
+        });
+    });
+</script>
 </body>
 </html>
