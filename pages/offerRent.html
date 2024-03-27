@@ -15,10 +15,35 @@
         <input type="text" id="propertyAddress" placeholder="Адрес" required><br>
         <input type="number" id="rentAmount" placeholder="Сумма аренды" required><br>
         <input type="number" id="rentDuration" placeholder="Продолжительность" required><br>
-        <button type="submit" id="offerButton">Предложить</button>
+        <button type="submit" id="offerRentButton">Предложить</button>
     </form>
 </div>
 <div id="result"></div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+        const offerRentButton = document.getElementById('offerRentButton');
+        offerRentButton.addEventListener('click', async (event) => {
+            event.preventDefault();
+
+            try {
+                const propertyAddress = document.getElementById('propertyAddress').value;
+                const rentAmount = document.getElementById('rentAmount').value;
+                const rentDuration = document.getElementById('rentDuration').value;
+
+                await contract.methods.offerRent(propertyAddress, rentAmount, rentDuration).send({
+                    from: '0x046f284908412C34e92AbB599A78B5299273C168',
+                    gas: 3000000
+                });
+
+                console.log('Аренда успешно предложена!');
+                window.location.href = "confirmRent.html";
+            } catch (error) {
+                console.error('Ошибка при предложении аренды:', error);
+            }
+        });
+    });
+</script>
 
 </body>
 </html>

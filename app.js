@@ -1,6 +1,7 @@
-const web3 = new Web3('http://localhost:7545');
+const ganacheUrl = 'http://localhost:7545';
+const web3 = new Web3(new Web3.providers.HttpProvider(ganacheUrl));
 
-const contractABI = [
+const contract =  new web3.eth.Contract([
 	{
 		"inputs": [
 			{
@@ -375,13 +376,9 @@ const contractABI = [
 		"stateMutability": "nonpayable",
 		"type": "function"
 	}
-];
+], '0x1AF1Cf26b01337Ebd61A57aCBfFB6cb0B31cb9bb');
 
-const contractAddress = '0x565e08b65D0F84F563Cd416A55CAE8C8613bB017';
-
-const estateAgencyContract = new web3.eth.Contract(contractABI, contractAddress);
-
-estateAgencyContract.methods.properties('0x09407Ad85c6EF8192a046E0bFe6895D268500457').call((error, result) => {
+contract.methods.properties('0x046f284908412C34e92AbB599A78B5299273C168').call((error, result) => {
 	if (error) {
 		console.error('Ошибка при вызове метода контракта:', error);
 	} else {
@@ -389,44 +386,5 @@ estateAgencyContract.methods.properties('0x09407Ad85c6EF8192a046E0bFe6895D268500
 	}
 });
 
-const confirmButton = document.getElementById('confirmButton');
-confirmButton.addEventListener('click', async (event) => {
-	event.preventDefault();
-	
-	try {
-		const propertyAddress = document.getElementById('propertyAddress').value;
-		const totalArea = document.getElementById('totalArea').value;
-		const usefulArea = document.getElementById('usefulArea').value;
-		
-		await estateAgencyContract.methods.registerProperty(propertyAddress, totalArea, usefulArea).send({
-			from: '0x09407Ad85c6EF8192a046E0bFe6895D268500457',
-			gas: 3000000
-		});
-		
-		console.log('Недвижимость успешно зарегистрирована!');
-	} catch (error) {
-		console.error('Ошибка при регистрации недвижимости:', error);
-	}
-});
-
-const offerButton = document.getElementById('offerButton');
-offerButton.addEventListener('click', async (event) => {
-	event.preventDefault();
-	
-	try {
-		const propertyAddress = document.getElementById('propertyAddress').value;
-		const rentAmount = document.getElementById('rentAmount').value;
-		const rentDuration = document.getElementById('rentDuration').value;
-		
-		await estateAgencyContract.methods.offerRent(propertyAddress, rentAmount, rentDuration).send({
-			from: '0x09407Ad85c6EF8192a046E0bFe6895D268500457',
-			gas: 3000000
-		});
-		
-		console.log('Предложение аренды успешно отправлено!');
-	} catch (error) {
-		console.error('Ошибка при отправке предложения аренды:', error);
-	}
-});
 
 

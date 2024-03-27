@@ -19,5 +19,27 @@
     </form>
 </div>
 <div id="result"></div>
+<script>
+    const confirmButton = document.getElementById('confirmButton');
+    confirmButton.addEventListener('click', async (event) => {
+        event.preventDefault();
+
+        try {
+            const propertyAddress = document.getElementById('propertyAddress').value;
+            const totalArea = document.getElementById('totalArea').value;
+            const usefulArea = document.getElementById('usefulArea').value;
+
+            await contract.methods.registerProperty(propertyAddress, totalArea, usefulArea).send({
+                from: '0x046f284908412C34e92AbB599A78B5299273C168',
+                gas: 3000000
+            });
+
+            console.log('Недвижимость успешно зарегистрирована!');
+            window.location.href = "offerRent.html";
+        } catch (error) {
+            console.error('Ошибка при регистрации недвижимости:', error);
+        }
+    });
+</script>
 </body>
 </html>
