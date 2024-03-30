@@ -27,11 +27,12 @@
                 const propertyAddress = document.getElementById('propertyAddress').value;
 
                 await contract.methods.confirmRent(propertyAddress).send({
-                    from: '0x046f284908412C34e92AbB599A78B5299273C168',
+                    from: '0xE64FFc2007Be7c89103DE804628d0e3F77EA8a92',
                     gas: 3000000
                 });
 
                 console.log('Аренда успешно подтверждена!');
+	            window.location.href = "mainPage.html";
             } catch (error) {
                 console.error('Ошибка при подтверждении аренды:', error);
             }

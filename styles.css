@@ -32,7 +32,7 @@ form {
     margin: 20px;
     padding: 20px;
     background-color: #fff;
-    border-radius: 5px;
+    border-radius: 6px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -70,7 +70,8 @@ button {
     font-weight: normal;
     background: #003aab;
     padding: 12px 24px;
-    border-radius: 24px;
+    border-radius: 6px;
+    margin: 6px 0 6px 0;
 }
 
 button:hover {

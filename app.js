@@ -376,9 +376,9 @@ const contract =  new web3.eth.Contract([
 		"stateMutability": "nonpayable",
 		"type": "function"
 	}
-], '0x1AF1Cf26b01337Ebd61A57aCBfFB6cb0B31cb9bb');
+], '0x0BD8A5921bfcD18D823BaCeC59C62Cce887eca20');
 
-contract.methods.properties('0x046f284908412C34e92AbB599A78B5299273C168').call((error, result) => {
+contract.methods.properties('0xE64FFc2007Be7c89103DE804628d0e3F77EA8a92').call((error, result) => {
 	if (error) {
 		console.error('Ошибка при вызове метода контракта:', error);
 	} else {

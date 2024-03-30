@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная страница</title>
+    <script src="../app.js" defer></script>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<div class="container">
+    <h1>Главная страница</h1>
+    <form id="mainPageForm">
+        <button type="button" id="registerPropertyButton">Зарегистрировать недвижимость</button>
+        <button type="button" id="offerRentButton">Предложить аренду</button>
+        <button type="button" id="confirmRentButton">Подтвердить аренду</button>
+        <button type="button" id="cancelRentOfferButton">Отменить аренду</button>
+        <button type="button" id="propertyInfo">Просмотреть информацию о недвижимости</button>
+    </form>
+</div>
+<script>
+	const registerPropertyButton = document.getElementById('registerPropertyButton');
+	registerPropertyButton.addEventListener('click', () => {
+        window.location.href = "createProperty.html";
+    })
+
+    const offerRentButton = document.getElementById('offerRentButton');
+    offerRentButton.addEventListener('click', () => {
+         window.location.href = "offerRent.html";
+    })
+
+
+    const confirmRentButton = document.getElementById('confirmRentButton');
+    confirmRentButton.addEventListener('click', () => {
+         window.location.href = "confirmRent.html";
+    })
+
+    const cancelRentOfferButton = document.getElementById('cancelRentOfferButton');
+    cancelRentOfferButton.addEventListener('click', () => {
+         window.location.href = "cancelRentOffer.html";
+    })
+
+    const propertyInfo = document.getElementById('propertyInfo');
+    propertyInfo.addEventListener('click', () => {
+        window.location.href = "viewProperty.html";
+    })
+</script>
+</body>
+</html>

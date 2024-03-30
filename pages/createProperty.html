@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Property</title>
+    <title>Регистрация недвижимости</title>
     <script src="../web3.min.js"></script>
     <script src="../app.js" defer></script>
     <link rel="stylesheet" href="../styles.css">
@@ -30,7 +30,7 @@
             const usefulArea = document.getElementById('usefulArea').value;
 
             await contract.methods.registerProperty(propertyAddress, totalArea, usefulArea).send({
-                from: '0x046f284908412C34e92AbB599A78B5299273C168',
+                from: '0xE64FFc2007Be7c89103DE804628d0e3F77EA8a92',
                 gas: 3000000
             });
 
