@@ -2,9 +2,42 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Title</title>
+	<title>Cancel Rent Offer</title>
+	<script src="../web3.min.js"></script>
+	<script src="../app.js"></script>
+	<link rel="stylesheet" href="../styles.css">
 </head>
 <body>
+<div class="container">
+	<h1>Отмена аренды</h1>
+	<form id="cancelRentOfferForm">
+		<input type="text" id="propertyAddress" placeholder="Адрес" required><br>
+		<button type="submit">Отменить</button>
+		<button type="button" onclick="history.back()">Назад</button>
+	</form>
+</div>
 
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		const cancelRentOfferForm = document.getElementById('cancelRentOfferForm');
+		cancelRentOfferForm.addEventListener('submit', async (event) => {
+			event.preventDefault();
+
+			try {
+				const propertyAddress = document.getElementById('propertyAddress').value;
+
+				await contract.methods.cancelRentOffer(propertyAddress).send({
+					from: '0x5C874151731adCa81Bae11B6623F2752152C44c4',
+					gas: 3000000
+				});
+
+				console.log('Аренда успешно отменена!');
+				window.location.href = "mainPage.html";
+			} catch (error) {
+				console.error('Ошибка при отмене аренды:', error);
+			}
+		});
+	});
+</script>
 </body>
 </html>
