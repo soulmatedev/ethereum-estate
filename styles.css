@@ -71,7 +71,10 @@ button {
     background: #003aab;
     padding: 12px 24px;
     border-radius: 6px;
-    margin: 6px 0 6px 0;
+}
+
+.btn {
+    margin-bottom: 12px;
 }
 
 button:hover {
