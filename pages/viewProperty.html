@@ -12,11 +12,41 @@
 <div class="container">
     <h1>Информация о недвижимости</h1>
     <form id="viewPropertyForm">
-        <input type="text" id="propertyAddress" placeholder="Адрес" required><br>
+        <input type="text" id="propertyAddress" class="input" placeholder="Адрес" required><br>
+        <div class="property-container">
+            <div id="propertyInfo" class="property-info"></div>
+        </div>
         <button type="submit" class="btn">Просмотреть</button>
-        <button type="button" onclick="history.back()">Назад</button>
+        <button type="button" onclick="history.back()" class="btn">Назад</button>
     </form>
 </div>
-<div id="propertyInfo"></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const viewPropertyForm = document.getElementById('viewPropertyForm');
+        const propertyInfoDiv = document.getElementById('propertyInfo');
+
+        viewPropertyForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const propertyAddress = document.getElementById('propertyAddress').value;
+
+            try {
+                const propertyInfo = await contract.methods.properties(propertyAddress).call();
+                propertyInfoDiv.innerHTML = `
+                    <p><strong>Адрес:</strong> ${propertyAddress}</p>
+                    <p><strong>Владелец:</strong> ${propertyInfo.owner}</p>
+                    <p><strong>Общая площадь:</strong> ${propertyInfo.totalArea}</p>
+                    <p><strong>Используемая площадь:</strong> ${propertyInfo.usefulArea}</p>
+                    <p><strong>Сумма аренды:</strong> ${propertyInfo.rentAmount}</p>
+                    <p><strong>Продолжительность аренды:</strong> ${propertyInfo.rentDuration}</p>
+                    <p><strong>Состояние аренды:</strong> ${propertyInfo.rented ? 'Арендовано' : 'Не арендовано'}</p>
+                `;
+            } catch (error) {
+                console.error('Ошибка при получении информации о недвижимости:', error);
+                propertyInfoDiv.innerHTML = `<p>Ошибка при получении информации о недвижимости: ${error.message}</p>`;
+            }
+        });
+    });
+</script>
 </body>
 </html>

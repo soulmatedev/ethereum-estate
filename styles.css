@@ -23,7 +23,7 @@ body {
 }
 
 .container {
-    width: 400px;
+    width: 500px;
     margin: 0 auto;
     text-align: center;
 }
@@ -79,4 +79,13 @@ button {
 
 button:hover {
     background: #0036a8;
+}
+
+.propertyInfo-container {
+    text-align: left;
+}
+
+.property-info {
+    line-height: 1.6em;
+    margin-bottom: 20px;
 }
