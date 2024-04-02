@@ -89,3 +89,9 @@ button:hover {
     line-height: 1.6em;
     margin-bottom: 20px;
 }
+
+.checkbox {
+    width: 18px;
+    height: 18px;
+}
+

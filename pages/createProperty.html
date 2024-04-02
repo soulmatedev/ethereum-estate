@@ -31,7 +31,7 @@
             const usefulArea = document.getElementById('usefulArea').value;
 
             await contract.methods.registerProperty(propertyAddress, totalArea, usefulArea).send({
-                from: '0x2939fa0679875963022316653F31eb0e1fe9DDBc',
+                from: propertyAddress,
                 gas: 3000000
             });
 

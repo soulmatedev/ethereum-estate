@@ -27,7 +27,7 @@
 				const propertyAddress = document.getElementById('propertyAddress').value;
 
 				await contract.methods.cancelRentOffer(propertyAddress).send({
-					from: '0x2939fa0679875963022316653F31eb0e1fe9DDBc',
+					from: propertyAddress,
 					gas: 3000000
 				});
 

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Главная страница</title>
     <script src="../app.js" defer></script>
+    <script src="../web3.min.js"></script>
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
@@ -14,7 +15,8 @@
         <button type="button" id="offerRentButton" class="btn">Предложить аренду</button>
         <button type="button" id="confirmRentButton" class="btn">Подтвердить аренду</button>
         <button type="button" id="cancelRentOfferButton" class="btn">Отменить аренду</button>
-        <button type="button" id="propertyInfo">Просмотреть информацию о недвижимости</button>
+        <button type="button" id="propertyInfo" class="btn">Просмотреть информацию о недвижимости</button>
+        <button type="button" id="changeRole">Сменить роль</button>
     </form>
 </div>
 <script>
@@ -42,6 +44,11 @@
     const propertyInfo = document.getElementById('propertyInfo');
     propertyInfo.addEventListener('click', () => {
         window.location.href = "viewProperty.html";
+    })
+
+    const changeRole = document.getElementById('changeRole');
+    changeRole.addEventListener('click', () => {
+        window.location.href = "changeUserRole.html";
     })
 </script>
 </body>
