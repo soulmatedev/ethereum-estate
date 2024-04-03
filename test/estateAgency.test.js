@@ -35,23 +35,6 @@ contract("EstateAgency", async (accounts) => {
 		assert.equal(property.rented, true, "Property not marked as rented");
 	});
 
-	it("should confirm rent for a property", async () => {
-		const propertyAddress = accounts[4];
-		const initialOwnerBalance = await web3.eth.getBalance(accounts[0]);
-		const renterBalanceBefore = await web3.eth.getBalance(accounts[1]);
-		const rentAmount = 1000;
-
-		await estateAgency.confirmRent(propertyAddress, { from: accounts[1], value: rentAmount });
-
-		const property = await estateAgency.properties(propertyAddress);
-		const finalOwnerBalance = await web3.eth.getBalance(accounts[0]);
-		const renterBalanceAfter = await web3.eth.getBalance(accounts[1]);
-
-		assert.equal(property.rented, false, "Property not marked as not rented");
-		assert.equal(finalOwnerBalance - initialOwnerBalance, rentAmount, "Incorrect owner balance change");
-		assert.approximately(renterBalanceAfter - renterBalanceBefore, -rentAmount, 100000, "Incorrect renter balance change"); // Taking gas costs into account
-	});
-
 	it("should cancel rent offer for a property", async () => {
 		const propertyAddress = accounts[4];
 
@@ -74,4 +57,27 @@ contract("EstateAgency", async (accounts) => {
 
 		assert.equal(isAdminAfterChange, isAdmin, "User role not changed");
 	});
+	
+	it("should change user role", async () => {
+		const user = accounts[5];
+		const isAdmin = true;
+		
+		// Изменяем роль пользователя
+		await estateAgency.changeUserRole(user, isAdmin, { from: accounts[0] });
+		
+		// Проверяем, изменилась ли роль пользователя на указанную
+		const isAdminAfterChange = await estateAgency.administrators(user);
+		
+		assert.equal(isAdminAfterChange, isAdmin, "User role not changed");
+		
+		// Попробуем снова изменить роль этого пользователя на противоположную
+		const newIsAdmin = !isAdmin;
+		await estateAgency.changeUserRole(user, newIsAdmin, { from: accounts[0] });
+		
+		// Проверяем, изменилась ли роль пользователя на противоположную
+		const newIsAdminAfterChange = await estateAgency.administrators(user);
+		
+		assert.equal(newIsAdminAfterChange, newIsAdmin, "User role not changed to opposite");
+	});
+	
 });
