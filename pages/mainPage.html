@@ -16,6 +16,8 @@
         <button type="button" id="confirmRentButton" class="btn">Подтвердить аренду</button>
         <button type="button" id="cancelRentOfferButton" class="btn">Отменить аренду</button>
         <button type="button" id="propertyInfo" class="btn">Просмотреть информацию о недвижимости</button>
+        <button type="button" id="transferFunds" class="btn">Перевод средств</button>
+        <button type="button" id="checkBalance" class="btn">Проверить баланс</button>
         <button type="button" id="changeRole">Сменить роль</button>
     </form>
 </div>
@@ -29,7 +31,6 @@
     offerRentButton.addEventListener('click', () => {
          window.location.href = "offerRent.html";
     })
-
 
     const confirmRentButton = document.getElementById('confirmRentButton');
     confirmRentButton.addEventListener('click', () => {
@@ -49,6 +50,16 @@
     const changeRole = document.getElementById('changeRole');
     changeRole.addEventListener('click', () => {
         window.location.href = "changeUserRole.html";
+    })
+
+    const transferFunds = document.getElementById('transferFunds');
+    transferFunds.addEventListener('click', () => {
+        window.location.href = "transferFunds.html";
+    })
+
+    const checkBalance = document.getElementById('checkBalance');
+    checkBalance.addEventListener('click', () => {
+        window.location.href = "checkBalance.html";
     })
 </script>
 </body>

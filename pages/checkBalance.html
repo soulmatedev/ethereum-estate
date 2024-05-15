@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Check Balance</title>
+	<script src="../web3.min.js"></script>
+	<script src="../app.js"></script>
+	<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<div class="container">
+	<h1>Проверка баланса</h1>
+	<form id="checkBalanceForm">
+		<input type="text" id="address" class="input" placeholder="Адрес" required><br>
+		<div class="balance-container">
+			<div id="balanceInfo" class="balance-info"></div>
+		</div>
+		<button style="margin-top: 10px" type="submit" class="btn">Проверить</button>
+		<button type="button" onclick="history.back()" class="btn">Назад</button>
+	</form>
+</div>
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		const checkBalanceForm = document.getElementById('checkBalanceForm');
+		checkBalanceForm.addEventListener('submit', async (event) => {
+			event.preventDefault();
+
+			try {
+				const address = document.getElementById('address').value;
+
+				const balance = await web3.eth.getBalance(address);
+
+				let balanceInfo = `
+					<p><h4>Адрес: </h4>${address}</p>
+					<p><h4>Баланс: </h4> ${web3.utils.fromWei(balance, 'ether')} ETH</p>
+				`;
+
+				document.getElementById('balanceInfo').innerHTML = balanceInfo;
+			} catch (error) {
+				console.error('Ошибка при проверке баланса:', error);
+			}
+		});
+	});
+</script>
+</body>
+</html>

@@ -345,21 +345,6 @@ const contract =  new web3.eth.Contract([
 		"constant": false,
 		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "withdrawFunds",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
 				"internalType": "address",
 				"name": "user",
 				"type": "address"
@@ -375,10 +360,71 @@ const contract =  new web3.eth.Contract([
 		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			}
+		],
+		"name": "checkBalance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"internalType": "address payable",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "transferFunds",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getAvailableProperties",
+		"outputs": [
+			{
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
 	}
-], '0xb620F22EF663190f281eA393ed87B3F5334Dd50f');
+], '0xb02d5e2DDC9c1038f3D0DfAFcc695aB503DA7eA5');
 
-contract.methods.properties('0x71431B2b1D1F790F21b0240390B08C5a2F816555').call((error, result) => {
+contract.methods.properties('0x9F34c82A8cdb3d15A137D0b8e0C8F4f11e37b0d1').call((error, result) => {
 	if (error) {
 		console.error('Ошибка при вызове метода контракта:', error);
 	} else {

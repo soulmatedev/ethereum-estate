@@ -44,12 +44,14 @@ contract EstateAgency {
 		_;
 	}
 
+	// Первая функция
 	function registerProperty(address propertyAddress, uint totalArea, uint usefulArea) public onlyAdmin {
 		require(properties[propertyAddress].owner == address(0), "Property is already registered");
 		properties[propertyAddress] = Property(msg.sender, totalArea, usefulArea, 0, 0, false);
 		emit PropertyRegistered(propertyAddress, msg.sender, totalArea, usefulArea);
 	}
 
+	// Вторая функция
 	function offerRent(address propertyAddress, uint rentAmount, uint rentDuration) public {
 		require(properties[propertyAddress].owner != address(0), "Property is not registered");
 		require(!properties[propertyAddress].rented, "Property is already rented");
@@ -59,6 +61,7 @@ contract EstateAgency {
 		emit RentOffered(propertyAddress, rentAmount, rentDuration);
 	}
 
+	// Третья функция
 	function confirmRent(address propertyAddress) public payable {
 		require(properties[propertyAddress].owner != address(0), "Property is not registered");
 		require(properties[propertyAddress].rented, "Property is not available for rent");
@@ -66,6 +69,7 @@ contract EstateAgency {
 		emit RentConfirmed(propertyAddress, msg.sender, msg.value, properties[propertyAddress].rentDuration);
 	}
 
+	// Четвертая функция
 	function cancelRentOffer(address propertyAddress) public onlyOwner(propertyAddress) {
 		require(properties[propertyAddress].rented, "Property is not rented");
 		properties[propertyAddress].rentAmount = 0;
@@ -74,16 +78,44 @@ contract EstateAgency {
 		emit RentCancelled(propertyAddress, msg.sender);
 	}
 
-	function withdrawFunds(uint amount) public {
-		require(balances[msg.sender] >= amount, "Insufficient balance");
-		balances[msg.sender] -= amount;
-		address payable receiver = address(uint160(msg.sender));
-		receiver.transfer(amount);
-		emit FundsWithdrawn(msg.sender, amount);
-	}
-
+	// Пятая функция
 	function changeUserRole(address user, bool isAdmin) public onlyAdmin {
 		administrators[user] = isAdmin;
 		emit RoleChanged(user, isAdmin);
+	}
+
+	// Шестая функция
+	function checkBalance(address user) public view returns (uint) {
+		return user.balance;
+	}
+
+	// new
+	function transferFunds(address from, address payable to, uint amount) public {
+		require(balances[from] >= amount, "Insufficient balance");
+		balances[from] -= amount;
+		to.transfer(amount);
+		emit FundsWithdrawn(from, amount);
+	}
+
+	// new
+	function getAvailableProperties() public view returns (address[] memory) {
+		uint count = 0;
+		for (uint i = 0; i < address(this).balance; i++) {
+			address propertyAddress = address(uint160(i));
+			if (properties[propertyAddress].rented == false) {
+				count++;
+			}
+		}
+
+		address[] memory availableProperties = new address[](count);
+		count = 0;
+		for (uint i = 0; i < address(this).balance; i++) {
+			address propertyAddress = address(uint160(i));
+			if (properties[propertyAddress].rented == false) {
+				availableProperties[count] = propertyAddress;
+				count++;
+			}
+		}
+		return availableProperties;
 	}
 }
