@@ -54,7 +54,7 @@ input {
 
 
 input:focus {
-    border: 1px solid #003aab;
+    border: 1px solid #1550ce;
 }
 
 ::placeholder {
@@ -68,7 +68,7 @@ button {
     border: none;
     color: white;
     font-weight: normal;
-    background: #003aab;
+    background: #1550ce;
     padding: 12px 24px;
     border-radius: 6px;
 }
@@ -78,7 +78,7 @@ button {
 }
 
 button:hover {
-    background: #0036a8;
+    background: #0943be;
 }
 
 .propertyInfo-container {

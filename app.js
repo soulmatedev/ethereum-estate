@@ -137,6 +137,19 @@ const contract =  new web3.eth.Contract([
 				"internalType": "address",
 				"name": "propertyAddress",
 				"type": "address"
+			}
+		],
+		"name": "PropertyRemoved",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "propertyAddress",
+				"type": "address"
 			},
 			{
 				"indexed": true,
@@ -437,6 +450,21 @@ const contract =  new web3.eth.Contract([
 		"inputs": [
 			{
 				"internalType": "address",
+				"name": "propertyAddress",
+				"type": "address"
+			}
+		],
+		"name": "removeProperty",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "address",
 				"name": "oldPropertyAddress",
 				"type": "address"
 			},
@@ -507,7 +535,7 @@ const contract =  new web3.eth.Contract([
 		"stateMutability": "nonpayable",
 		"type": "function"
 	}
-], '0x6319657a0e182B345BEA023782BAc97403E9d0eb');
+], '0x5bA2c5FE497e19C2679d303255a9c57f30950806');
 
 contract.methods.properties('0xf060759B2C58d5CEBCdcDc1fa52C561E889E7e23').call((error, result) => {
 	if (error) {

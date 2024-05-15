@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Remove Property</title>
+	<script src="../web3.min.js"></script>
+	<script src="../app.js"></script>
+	<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<div class="container">
+	<h1>Удаление недвижимости</h1>
+	<form id="removePropertyForm">
+		<input type="text" id="propertyAddress" placeholder="Адрес недвижимости" required><br>
+		<button type="submit" class="btn">Удалить</button>
+		<button type="button" onclick="history.back()">Назад</button>
+	</form>
+</div>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		const removePropertyForm = document.getElementById('removePropertyForm');
+		removePropertyForm.addEventListener('submit', async (event) => {
+			event.preventDefault();
+
+			try {
+				const propertyAddress = document.getElementById('propertyAddress').value;
+
+				await contract.methods.removeProperty(propertyAddress).send({
+					from: propertyAddress,
+					gas: 3000000
+				});
+
+				console.log('Недвижимость успешно удалена!');
+				window.location.href = "mainPage.html";
+			} catch (error) {
+				console.error('Ошибка при удалении недвижимости:', error);
+			}
+		});
+	});
+</script>
+</body>
+</html>

@@ -24,6 +24,7 @@ contract EstateAgency {
 	event RoleChanged(address indexed user, bool isAdmin);
 	event PropertyAreasUpdated(address indexed propertyAddress, uint newTotalArea, uint newUsefulArea);
 	event PropertyOwnerChanged(address indexed propertyAddress, address indexed previousOwner, address indexed newOwner);
+	event PropertyRemoved(address indexed propertyAddress);
 
 	constructor(address admin1, address admin2, address owner1, address owner2) public {
 		administrators[admin1] = true;
@@ -92,6 +93,15 @@ contract EstateAgency {
 	}
 
 	// Седьмая функция
+	function removeProperty(address propertyAddress) public onlyAdmin {
+		delete properties[propertyAddress];
+		emit PropertyRemoved(propertyAddress);
+	}
+
+	// Восьмая функция
+
+
+	// Десятая функция
 	function transferOwnership(address oldPropertyAddress, address newOwner) public {
 		require(newOwner != address(0), "Invalid new owner address");
 		require(properties[oldPropertyAddress].owner != address(0), "Property is not registered");
