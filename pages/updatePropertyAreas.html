@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Update Property Areas</title>
+	<script src="../web3.min.js"></script>
+	<script src="../app.js"></script>
+	<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<div class="container">
+	<h1>Обновление площадей недвижимости</h1>
+	<form id="updatePropertyAreasForm">
+		<input type="text" id="propertyAddress" placeholder="Адрес недвижимости" required><br>
+		<input type="number" id="newTotalArea" placeholder="Новая общая площадь" required><br>
+		<input type="number" id="newUsefulArea" placeholder="Новая полезная площадь" required><br>
+		<button type="submit" class="btn">Обновить</button>
+		<button type="button" onclick="history.back()">Назад</button>
+	</form>
+</div>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		const updatePropertyAreasForm = document.getElementById('updatePropertyAreasForm');
+		updatePropertyAreasForm.addEventListener('submit', async (event) => {
+			event.preventDefault();
+
+			try {
+				const propertyAddress = document.getElementById('propertyAddress').value;
+				const newTotalArea = document.getElementById('newTotalArea').value;
+				const newUsefulArea = document.getElementById('newUsefulArea').value;
+				const accounts = await web3.eth.getAccounts();
+
+				await contract.methods.updatePropertyAreas(propertyAddress, newTotalArea, newUsefulArea).send({
+					from: accounts[0],
+					gas: 3000000
+				});
+
+				console.log('Площади недвижимости успешно обновлены!');
+				window.location.href = "mainPage.html";
+			} catch (error) {
+				console.error('Ошибка при обновлении площадей недвижимости:', error);
+			}
+		});
+	});
+</script>
+</body>
+</html>

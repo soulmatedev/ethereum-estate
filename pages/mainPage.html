@@ -15,6 +15,7 @@
         <button type="button" id="offerRentButton" class="btn">Предложить аренду</button>
         <button type="button" id="confirmRentButton" class="btn">Подтвердить аренду</button>
         <button type="button" id="cancelRentOfferButton" class="btn">Отменить аренду</button>
+        <button type="button" id="updatePropertyAreas" class="btn">Обновить площадь недвижимости</button>
         <button type="button" id="propertyInfo" class="btn">Просмотреть информацию о недвижимости</button>
         <button type="button" id="transferOwnership" class="btn">Передать недвижимость</button>
         <button type="button" id="removeProperty" class="btn">Удалить недвижимость</button>
@@ -66,6 +67,11 @@
     const transferOwnership = document.getElementById('transferOwnership');
     transferOwnership.addEventListener('click', () => {
         window.location.href = "transferOwnership.html";
+    })
+
+    const updatePropertyAreas = document.getElementById('updatePropertyAreas');
+    updatePropertyAreas.addEventListener('click', () => {
+        window.location.href = "updatePropertyAreas.html";
     })
 </script>
 </body>

@@ -99,7 +99,18 @@ contract EstateAgency {
 	}
 
 	// Восьмая функция
+	function updatePropertyAreas(address propertyAddress, uint newTotalArea, uint newUsefulArea) public onlyAdmin {
+		require(newTotalArea > 0, "Total area must be greater than zero");
+		require(newUsefulArea <= newTotalArea, "Useful area cannot exceed total area");
 
+		Property storage property = properties[propertyAddress];
+		property.totalArea = newTotalArea;
+		property.usefulArea = newUsefulArea;
+
+		emit PropertyAreasUpdated(propertyAddress, newTotalArea, newUsefulArea);
+	}
+
+	// Девятая функция
 
 	// Десятая функция
 	function transferOwnership(address oldPropertyAddress, address newOwner) public {

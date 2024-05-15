@@ -465,6 +465,31 @@ const contract =  new web3.eth.Contract([
 		"inputs": [
 			{
 				"internalType": "address",
+				"name": "propertyAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "newTotalArea",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "newUsefulArea",
+				"type": "uint256"
+			}
+		],
+		"name": "updatePropertyAreas",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "address",
 				"name": "oldPropertyAddress",
 				"type": "address"
 			},
@@ -535,7 +560,7 @@ const contract =  new web3.eth.Contract([
 		"stateMutability": "nonpayable",
 		"type": "function"
 	}
-], '0x5bA2c5FE497e19C2679d303255a9c57f30950806');
+], '0x5DE5b5163cB7e42fa0DE26FC5006B27fF90DdA21');
 
 contract.methods.properties('0xf060759B2C58d5CEBCdcDc1fa52C561E889E7e23').call((error, result) => {
 	if (error) {
