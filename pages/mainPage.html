@@ -16,6 +16,7 @@
         <button type="button" id="confirmRentButton" class="btn">Подтвердить аренду</button>
         <button type="button" id="cancelRentOfferButton" class="btn">Отменить аренду</button>
         <button type="button" id="propertyInfo" class="btn">Просмотреть информацию о недвижимости</button>
+        <button type="button" id="transferOwnership" class="btn">Передать недвижимость</button>
         <button type="button" id="transferFunds" class="btn">Перевод средств</button>
         <button type="button" id="checkBalance" class="btn">Проверить баланс</button>
         <button type="button" id="changeRole">Сменить роль</button>
@@ -60,6 +61,11 @@
     const checkBalance = document.getElementById('checkBalance');
     checkBalance.addEventListener('click', () => {
         window.location.href = "checkBalance.html";
+    })
+
+    const transferOwnership = document.getElementById('transferOwnership');
+    transferOwnership.addEventListener('click', () => {
+        window.location.href = "transferOwnership.html";
     })
 </script>
 </body>

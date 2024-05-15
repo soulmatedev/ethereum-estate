@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Передача собственности</title>
+	<script src="../web3.min.js"></script>
+	<script src="../app.js"></script>
+	<link rel="stylesheet" href="../styles.css">
+	<style>
+        .property-container {
+            display: none;
+        }
+	</style>
+</head>
+<body>
+<div class="container">
+	<h1>Передача недвижимости</h1>
+	<form id="transferOwnerForm">
+		<p for="propertyAddress" style="margin-bottom: 10px">Адрес объекта недвижимости:</p>
+		<input type="text" id="propertyAddress" placeholder="Введите адрес объекта недвижимости" required><br>
+		<p for="newOwnerAddress" style="margin-bottom: 10px">Адрес нового владельца:</p>
+		<input type="text" id="newOwnerAddress" placeholder="Введите адрес нового владельца" required><br>
+		<div class="property-container">
+			<div id="propertyInfo" class="property-info"></div>
+		</div>
+		<button type="submit" class="btn">Передать</button>
+		<button type="button" onclick="history.back()">Назад</button>
+	</form>
+</div>
+<div id="result"></div>
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		const transferOwnerForm = document.getElementById('transferOwnerForm');
+		const propertyInfoDiv = document.getElementById('propertyInfo');
+		const propertyContainer = document.querySelector('.property-container');
+
+		transferOwnerForm.addEventListener('submit', async (event) => {
+			event.preventDefault();
+
+			try {
+				const propertyAddress = document.getElementById('propertyAddress').value;
+				const newOwnerAddress = document.getElementById('newOwnerAddress').value;
+
+				await contract.methods.transferOwnership(propertyAddress, newOwnerAddress).send({
+					from: propertyAddress,
+					gas: 3000000
+				});
+
+				await contract.methods.updatePropertyAfterTransfer(propertyAddress).send({
+					from: newOwnerAddress,
+					gas: 3000000
+				});
+
+				console.log('Недвижимость успешно передана!');
+				propertyInfoDiv.innerHTML = `
+                <h4 style="color: forestgreen">Недвижимость успешно передана!
+                <br> Переход на главную страницу через 3 секунды.</h4>`;
+				propertyContainer.style.display = 'block';
+
+				setTimeout(() => {
+					window.location.href = "mainPage.html";
+				}, 3000);
+			} catch (error) {
+				console.error('Ошибка при передаче:', error);
+			}
+		});
+	});
+</script>
+</body>
+</html>

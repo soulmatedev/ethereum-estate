@@ -58,6 +58,56 @@ const contract =  new web3.eth.Contract([
 				"type": "address"
 			},
 			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "newTotalArea",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "newUsefulArea",
+				"type": "uint256"
+			}
+		],
+		"name": "PropertyAreasUpdated",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "propertyAddress",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "previousOwner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "PropertyOwnerChanged",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "propertyAddress",
+				"type": "address"
+			},
+			{
 				"indexed": true,
 				"internalType": "address",
 				"name": "owner",
@@ -387,44 +437,79 @@ const contract =  new web3.eth.Contract([
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "from",
+				"name": "oldPropertyAddress",
 				"type": "address"
 			},
 			{
-				"internalType": "address payable",
-				"name": "to",
+				"internalType": "address",
+				"name": "newOwner",
 				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
 			}
 		],
-		"name": "transferFunds",
+		"name": "transferOwnership",
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
-		"constant": true,
-		"inputs": [],
-		"name": "getAvailableProperties",
-		"outputs": [
+		"constant": false,
+		"inputs": [
 			{
-				"internalType": "address[]",
-				"name": "",
-				"type": "address[]"
+				"internalType": "address",
+				"name": "propertyAddress",
+				"type": "address"
 			}
 		],
+		"name": "updatePropertyAfterTransfer",
+		"outputs": [],
 		"payable": false,
-		"stateMutability": "view",
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "propertyAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "totalArea",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "usefulArea",
+				"type": "uint256"
+			}
+		],
+		"name": "registerNewProperty",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "propertyAddress",
+				"type": "address"
+			}
+		],
+		"name": "clearOldPropertyOwner",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
 		"type": "function"
 	}
-], '0xb02d5e2DDC9c1038f3D0DfAFcc695aB503DA7eA5');
+], '0x6319657a0e182B345BEA023782BAc97403E9d0eb');
 
-contract.methods.properties('0x9F34c82A8cdb3d15A137D0b8e0C8F4f11e37b0d1').call((error, result) => {
+contract.methods.properties('0xf060759B2C58d5CEBCdcDc1fa52C561E889E7e23').call((error, result) => {
 	if (error) {
 		console.error('Ошибка при вызове метода контракта:', error);
 	} else {

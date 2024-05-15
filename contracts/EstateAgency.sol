@@ -22,6 +22,8 @@ contract EstateAgency {
 	event RentCancelled(address indexed propertyAddress, address indexed renter);
 	event FundsWithdrawn(address indexed receiver, uint amount);
 	event RoleChanged(address indexed user, bool isAdmin);
+	event PropertyAreasUpdated(address indexed propertyAddress, uint newTotalArea, uint newUsefulArea);
+	event PropertyOwnerChanged(address indexed propertyAddress, address indexed previousOwner, address indexed newOwner);
 
 	constructor(address admin1, address admin2, address owner1, address owner2) public {
 		administrators[admin1] = true;
@@ -89,33 +91,38 @@ contract EstateAgency {
 		return user.balance;
 	}
 
-	// new
-	function transferFunds(address from, address payable to, uint amount) public {
-		require(balances[from] >= amount, "Insufficient balance");
-		balances[from] -= amount;
-		to.transfer(amount);
-		emit FundsWithdrawn(from, amount);
+	// Седьмая функция
+	function transferOwnership(address oldPropertyAddress, address newOwner) public {
+		require(newOwner != address(0), "Invalid new owner address");
+		require(properties[oldPropertyAddress].owner != address(0), "Property is not registered");
+		Property storage oldProperty = properties[oldPropertyAddress];
+		require(oldProperty.owner == msg.sender, "Only the current owner can perform this action");
+
+		oldProperty.owner = newOwner;
+		emit PropertyOwnerChanged(oldPropertyAddress, oldProperty.owner, newOwner);
+
+		address newPropertyAddress = newOwner;
+		properties[newPropertyAddress] = Property(newPropertyAddress, oldProperty.totalArea, oldProperty.usefulArea, oldProperty.rentAmount, oldProperty.rentDuration, oldProperty.rented);
+		emit PropertyRegistered(newPropertyAddress, newPropertyAddress, oldProperty.totalArea, oldProperty.usefulArea);
+
+		delete properties[oldPropertyAddress];
 	}
 
-	// new
-	function getAvailableProperties() public view returns (address[] memory) {
-		uint count = 0;
-		for (uint i = 0; i < address(this).balance; i++) {
-			address propertyAddress = address(uint160(i));
-			if (properties[propertyAddress].rented == false) {
-				count++;
-			}
-		}
+	function updatePropertyAfterTransfer(address propertyAddress) public {
+		balances[properties[propertyAddress].owner] += properties[propertyAddress].rentAmount * properties[propertyAddress].rentDuration;
+	}
 
-		address[] memory availableProperties = new address[](count);
-		count = 0;
-		for (uint i = 0; i < address(this).balance; i++) {
-			address propertyAddress = address(uint160(i));
-			if (properties[propertyAddress].rented == false) {
-				availableProperties[count] = propertyAddress;
-				count++;
-			}
-		}
-		return availableProperties;
+	function registerNewProperty(address propertyAddress, uint totalArea, uint usefulArea) public {
+		require(properties[propertyAddress].owner == address(0), "Property is already registered");
+		properties[propertyAddress] = Property(msg.sender, totalArea, usefulArea, 0, 0, false);
+		emit PropertyRegistered(propertyAddress, msg.sender, totalArea, usefulArea);
+	}
+	function clearOldPropertyOwner(address propertyAddress) public {
+		require(properties[propertyAddress].owner != address(0), "Property is not registered");
+		Property storage property = properties[propertyAddress];
+		require(property.owner == msg.sender, "Only the previous owner can perform this action");
+
+		property.owner = address(0);
+		emit PropertyOwnerChanged(propertyAddress, property.owner, address(0));
 	}
 }
