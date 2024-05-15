@@ -1,10 +1,10 @@
 const EstateAgency = artifacts.require("EstateAgency");
 
 module.exports = function (deployer) {
-	const admin1 = "0xf060759B2C58d5CEBCdcDc1fa52C561E889E7e23";
-	const admin2 = "0x3b458729BF88a18947c716EaeD432adEf83653fB";
-	const owner1 = "0xE6e1Aa877F1EFa473824EB5cA975e73F3666aEB0";
-	const owner2 = "0x41E74c86C36168175c5881945Dd575Efb8B3Aa58";
+	const admin1 = "0x9F50e3B1c55E21112f8C4c0ED0CDD6b0714008D9";
+	const admin2 = "0xA0c29EeBca71f5598b670A955aaE34bE1f539921";
+	const owner1 = "0xD67718Bb0078a51E17B0F41FDa9bc2899D9D9Ee3";
+	const owner2 = "0x070F4a510C0d952D9ac2B5048232b226b4bc1B57";
 
 	deployer.deploy(EstateAgency, admin1, admin2, owner1, owner2);
 };

@@ -111,8 +111,6 @@ contract EstateAgency {
 	}
 
 	// Девятая функция
-
-	// Десятая функция
 	function transferOwnership(address oldPropertyAddress, address newOwner) public {
 		require(newOwner != address(0), "Invalid new owner address");
 		require(properties[oldPropertyAddress].owner != address(0), "Property is not registered");
